@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: k8s-backend
+   namespace: my-app
+spec:
+   replicas: 1
+   selector:
+      matchLabels:
+         kubernetes.io/hostname: minikube
+   template:
+      metadata:
+         labels:
+            kubernetes.io/hostname: minikube
+      spec:
+         containers:
+            - name: k8s-backend
+              image: k8s-backend:latest
+              imagePullPolicy: Never
+---
+apiVersion: v1
+kind: Service
+metadata:
+   name: entry-k8s-backend
+   namespace: my-app
+spec:
+   type: NodePort
+   selector:
+      kubernetes.io/hostname: minikube
+   ports:
+      - port: 8080
+        targetPort: 8080
+        nodePort: 30001
