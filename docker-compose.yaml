@@ -1,0 +1,21 @@
+services:
+  k8s-db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB : queries
+    volumes:
+      - k8s-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+  app: 
+    image: k8s-backend
+    restart: always
+    environment: 
+      postgres_connection_string : postgresql://postgres:postgres@localhost:5432/queries?sslmode=disable
+    ports: 
+      - 8080:8080
+volumes:
+  k8s-data:

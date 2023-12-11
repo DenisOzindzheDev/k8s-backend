@@ -16,7 +16,7 @@ spec:
          containers:
             - name: k8s-backend
               image: k8s-backend:latest
-              imagePullPolicy: Never
+              imagePullPolicy: Always
 ---
 apiVersion: v1
 kind: Service

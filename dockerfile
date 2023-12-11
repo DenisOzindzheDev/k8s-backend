@@ -5,8 +5,10 @@ FROM golang:1.19
 # Set destination for COPY
 WORKDIR /app
 
+ENV postgres_connection_string = "postgresql://postgres:postgres@localhost:5432/queries?sslmode=disable"
+
 # Download Go modules
-COPY go.mod ./
+COPY go.mod go.sum ./
 RUN go mod download
 
 # Copy the source code. Note the slash at the end, as explained in
